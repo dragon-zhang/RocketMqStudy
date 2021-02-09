@@ -16,6 +16,7 @@
         <module>04TransactionMQProducer</module>
         <module>05DelayTimeLevel</module>
         <module>06AllocateMessageQueueStrategy</module>
+        <module>07Retry</module>
     </modules>
 
     <properties>
