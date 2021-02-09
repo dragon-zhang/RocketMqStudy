@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>02Client</artifactId>
+    <artifactId>04TransactionMQProducer</artifactId>
 
     <dependencies>
         <dependency>
@@ -18,7 +18,7 @@
         </dependency>
         <dependency>
             <groupId>org.apache.rocketmq</groupId>
-            <artifactId>rocketmq-client</artifactId>
+            <artifactId>rocketmq-broker</artifactId>
         </dependency>
     </dependencies>
 </project>

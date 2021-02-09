@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>01Server</artifactId>
+    <artifactId>03MessageQueueSelector</artifactId>
 
     <dependencies>
         <dependency>

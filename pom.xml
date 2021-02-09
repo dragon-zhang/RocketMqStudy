@@ -10,8 +10,11 @@
     <version>1.0.0-SNAPSHOT</version>
 
     <modules>
-        <module>01Server</module>
-        <module>02Client</module>
+        <module>01Producer</module>
+        <module>02Consumer</module>
+        <module>03MessageQueueSelector</module>
+        <module>04TransactionMQProducer</module>
+        <module>05DelayTimeLevel</module>
     </modules>
 
     <properties>
