@@ -15,6 +15,7 @@
         <module>03MessageQueueSelector</module>
         <module>04TransactionMQProducer</module>
         <module>05DelayTimeLevel</module>
+        <module>06AllocateMessageQueueStrategy</module>
     </modules>
 
     <properties>

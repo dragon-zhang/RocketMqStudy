@@ -4,7 +4,11 @@ import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.MessageSelector;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
+import org.apache.rocketmq.client.consumer.listener.ConsumeOrderlyContext;
+import org.apache.rocketmq.client.consumer.listener.ConsumeOrderlyStatus;
 import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
+import org.apache.rocketmq.client.consumer.listener.MessageListenerOrderly;
+import org.apache.rocketmq.client.consumer.rebalance.AllocateMessageQueueAveragelyByCircle;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.common.protocol.heartbeat.MessageModel;
 
@@ -15,9 +19,9 @@ import java.util.List;
 
 /**
  * @author zhangzicheng
- * @date 2021/02/07
+ * @date 2021/02/09
  */
-public class Consumer {
+public class StrategyConsumer {
 
     private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss.SSS");
 
@@ -26,19 +30,21 @@ public class Consumer {
         consumer.setNamesrvAddr("localhost:9876");
         consumer.setMessageModel(MessageModel.CLUSTERING);
         consumer.subscribe("test", MessageSelector.byTag("ssss"));
-        //并发消费
-        consumer.registerMessageListener(new MessageListenerConcurrently() {
+        //顺序消费
+        consumer.registerMessageListener(new MessageListenerOrderly() {
             @Override
-            public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs, ConsumeConcurrentlyContext context) {
+            public ConsumeOrderlyStatus consumeMessage(List<MessageExt> msgs, ConsumeOrderlyContext context) {
                 for (MessageExt msg : msgs) {
                     String topic = msg.getTopic();
                     String body = new String(msg.getBody(), StandardCharsets.UTF_8);
                     String tags = msg.getTags();
                     System.out.println("consumeTime:" + sdf.format(new Date()) + " topic:" + topic + " tags:" + tags + " body:" + body);
                 }
-                return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
+                return ConsumeOrderlyStatus.SUCCESS;
             }
         });
+        //轮询策略
+        consumer.setAllocateMessageQueueStrategy(new AllocateMessageQueueAveragelyByCircle());
         consumer.start();
         System.out.println("consumer started !");
     }
