@@ -17,6 +17,7 @@
         <module>05DelayTimeLevel</module>
         <module>06AllocateMessageQueueStrategy</module>
         <module>07Retry</module>
+        <module>08AsyncProducer</module>
     </modules>
 
     <properties>
