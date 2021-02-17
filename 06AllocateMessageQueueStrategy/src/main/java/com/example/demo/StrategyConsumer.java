@@ -9,6 +9,7 @@ import org.apache.rocketmq.client.consumer.listener.ConsumeOrderlyStatus;
 import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
 import org.apache.rocketmq.client.consumer.listener.MessageListenerOrderly;
 import org.apache.rocketmq.client.consumer.rebalance.AllocateMessageQueueAveragelyByCircle;
+import org.apache.rocketmq.common.consumer.ConsumeFromWhere;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.common.protocol.heartbeat.MessageModel;
 
@@ -29,6 +30,8 @@ public class StrategyConsumer {
         DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("test_group");
         consumer.setNamesrvAddr("localhost:9876");
         consumer.setMessageModel(MessageModel.CLUSTERING);
+        //设置从哪里开始消费
+        consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_LAST_OFFSET);
         consumer.subscribe("test", MessageSelector.byTag("ssss"));
         //顺序消费
         consumer.registerMessageListener(new MessageListenerOrderly() {
