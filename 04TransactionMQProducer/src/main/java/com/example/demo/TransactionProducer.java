@@ -19,14 +19,16 @@ public class TransactionProducer {
         producer.start();
         System.out.println("producer started !");
 
-        Message message = new Message("test",
-                //tag用于过滤消息
-                "ssss",
-                "TransactionProducer say hello".getBytes());
-        message.setDelayTimeLevel(1);
+        for (int i = 0; i < 10; i++) {
+            Message message = new Message("test",
+                    //tag用于过滤消息
+                    "ssss",
+                    ("TransactionProducer say hello " + i).getBytes());
 
-        SendResult result = producer.send(message);
-        System.out.println(result);
+            SendResult result = producer.sendMessageInTransaction(message, i);
+            System.out.println(result);
+        }
+        Thread.sleep(90000);
         producer.shutdown();
     }
 }

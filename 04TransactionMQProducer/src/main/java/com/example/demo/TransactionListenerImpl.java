@@ -22,7 +22,7 @@ public class TransactionListenerImpl implements TransactionListener {
     @Override
     public LocalTransactionState executeLocalTransaction(Message msg, Object arg) {
         int status = count.getAndIncrement() % 3;
-        System.out.println("收到ACK，执行本地事务，status->" + status);
+        System.out.println("arg->" + arg + " 收到ACK，执行本地事务，status->" + status);
         transactions.put(msg.getTransactionId(), status);
         return getLocalTransactionState(status);
     }
@@ -32,7 +32,7 @@ public class TransactionListenerImpl implements TransactionListener {
      */
     @Override
     public LocalTransactionState checkLocalTransaction(MessageExt msg) {
-        System.out.println("有刁民没有报告事务状态，盘他！");
+        System.out.println("有刁民没有报告事务状态，盘他！" + msg);
         Integer status = transactions.get(msg.getTransactionId());
         if (status == null) {
             return LocalTransactionState.UNKNOW;
