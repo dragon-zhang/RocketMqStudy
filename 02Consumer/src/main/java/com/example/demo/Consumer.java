@@ -26,8 +26,15 @@ public class Consumer {
         DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("test_group");
         consumer.setNamesrvAddr("localhost:9876");
         //设置从哪里开始消费
-        consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_LAST_OFFSET);
+        consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
         consumer.setMessageModel(MessageModel.CLUSTERING);
+        //设置一次性拉32条消息
+        consumer.setPullBatchSize(32);
+        //默认并发数为1，跟顺序消费没有区别
+        consumer.setConsumeMessageBatchMaxSize(32);
+        //默认线程数为20
+        consumer.setConsumeThreadMin(32);
+        consumer.setConsumeThreadMax(32);
         consumer.subscribe("test", MessageSelector.byTag("ssss"));
         //并发消费
         consumer.registerMessageListener(new MessageListenerConcurrently() {
